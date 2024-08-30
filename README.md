@@ -29,6 +29,11 @@
    docker compose up flask_app
    ```
 
+5. **Como executar testes unitários da aplicação:**
+   ```bash
+   docker-compose run flask_test
+   ```
+
 ## Rotas Disponíveis
 
 ### 1. Verificar Estado da aplicação
