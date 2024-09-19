@@ -2,8 +2,24 @@ from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from datetime import datetime, timezone
+from flask_caching import Cache
+
+
+
+config = {
+    "DEBUG": True,
+    "CACHE_TYPE": "redis",
+    "CACHE_REDIS_HOST": "redis",
+    "CACHE_REDIS_PORT": 6379,
+    "CACHE_DEFAULT_TIMEOUT": 300
+}
+
 
 app = Flask(__name__)
+
+app.config.from_mapping(config)
+cache = Cache(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 db = SQLAlchemy(app)
 
@@ -34,6 +50,7 @@ db.create_all()
 
 
 @app.route("/health")
+@cache.cached(timeout=30)
 def health():
     return jsonify({'message': 'live'})
 
@@ -52,6 +69,7 @@ def create_task():
 
 
 @app.route('/tasks', methods=['GET'])
+@cache.cached(timeout=30)
 def get_tasks():
     try:
         tasks = Task.query.all()
@@ -61,6 +79,7 @@ def get_tasks():
 
 
 @app.route('/tasks/<int:id>', methods=['GET'])
+@cache.cached(timeout=30)
 def get_task(id):
     try:
         task = Task.query.filter_by(id=id).first()
@@ -104,6 +123,7 @@ def delete_task(id):
 
 
 @app.route('/tasks/completed', methods=['GET'])
+@cache.cached(timeout=30)
 def get_completed_tasks():
     try:
         completed_tasks = Task.query.filter_by(is_done=True).all()

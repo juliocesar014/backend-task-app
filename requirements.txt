@@ -1,3 +1,8 @@
 flask
 psycopg2-binary
 Flask-SQLAlchemy
+redis 
+flask_caching
+python-dotenv
+pytest
+Flask-Caching

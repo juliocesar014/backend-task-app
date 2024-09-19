@@ -10,29 +10,20 @@
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/juliocesar014/backend-unimed-teste.git
-   cd backend-unimed-teste
+   git clone https://github.com/juliocesar014/backend-task-app.git
+   cd backend-task-app
    ```
 
-2. **Suba o container do banco de dados:**
+2. **Construa as imagens Docker e suba os Containers**
    ```bash
-   docker compose up flask_db
+   docker-compose up -d --build 
    ```
 
-3. **Construa as imagens Docker:**
-   ```bash
-   docker compose build
-   ```
+3. **Rodar testes unitários**
+    ```bash
+    docker-compose run flask_test
+    ```
 
-4. **Suba a aplicação Flask:**
-   ```bash
-   docker compose up flask_app
-   ```
-
-5. **Como executar testes unitários da aplicação:**
-   ```bash
-   docker-compose run flask_test
-   ```
 
 ## Rotas Disponíveis
 
